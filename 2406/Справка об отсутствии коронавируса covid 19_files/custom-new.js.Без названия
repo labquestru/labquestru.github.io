@@ -1,0 +1,588 @@
+function updateURLParameter(e, t, s) {
+    var i = "", a = e.split("?"), n = a[0], o = a[1], r = "";
+    if (o) {
+        a = o.split("&");
+        for (var l = 0; l < a.length; l++) a[l].split("=")[0] != t && (i += r + a[l], r = "&")
+    }
+    return n + "?" + i + (r + "" + t + "=" + s)
+}
+
+function GetURLParameter(e) {
+    for (var t = window.location.search.substring(1).split("&"), s = 0; s < t.length; s++) {
+        var i = t[s].split("=");
+        if (i[0] == e) return i[1]
+    }
+}
+
+$(document).ready((function () {
+    if ("Y" != Cookies.get("changecity_popup") && $(".changecity-popup").show(), $(".changecity-popup .сonfirm_btn").on("click", (function () {
+        Cookies.set("changecity_popup", "Y")
+    })), $(".js-show-vacancies-open").on("click", (function () {
+        return $(".vacancies .vacancy").removeClass("additional"), $(this).hide(), !1
+    })), $(".tempmain").length > 0) {
+        var e = $(".news-slider1");
+        $(e).slick({
+            infinite: !0,
+            dots: !1,
+            arrows: !1,
+            variableWidth: !1,
+            autoplay: !1,
+            autoplaySpeed: 2e3,
+            lazyLoad: "ondemand",
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            responsive: [{
+                breakpoint: 1300,
+                settings: {slidesToShow: 3, variableWidth: !0, slidesToScroll: 1, infinite: !0, dots: !0, arrows: !0}
+            }, {
+                breakpoint: 600,
+                settings: {slidesToShow: 2, variableWidth: !0, slidesToScroll: 1, dots: !0, arrows: !0, centerMode: !0}
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    variableWidth: !1,
+                    slidesToScroll: 1,
+                    dots: !0,
+                    arrows: !0,
+                    infinite: !1,
+                    centerMode: !0
+                }
+            }]
+        });
+        var t = $(".news-slider2");
+        $(t).slick({
+            infinite: !0,
+            dots: !1,
+            arrows: !1,
+            variableWidth: !1,
+            autoplay: !1,
+            autoplaySpeed: 2e3,
+            lazyLoad: "ondemand",
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            responsive: [{
+                breakpoint: 1300,
+                settings: {slidesToShow: 3, variableWidth: !0, slidesToScroll: 1, infinite: !0, dots: !0, arrows: !0}
+            }, {
+                breakpoint: 600,
+                settings: {slidesToShow: 2, variableWidth: !0, slidesToScroll: 1, dots: !0, arrows: !0, centerMode: !0}
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    variableWidth: !1,
+                    slidesToScroll: 1,
+                    dots: !0,
+                    arrows: !0,
+                    infinite: !1,
+                    centerMode: !0
+                }
+            }]
+        }), $(".news-actions .chtype").on("click", (function () {
+            var s = $(this).data("id");
+            return $(".news-actions .chtype").removeClass("active"), $(this).addClass("active"), $(".news-actions .news-type").removeClass("active"), $('.news-actions .news-type[data-id="' + s + '"]').addClass("active"), $(e).slick("refresh"), $(t).slick("refresh"), !1
+        }))
+    }
+    if ($(".mobmenu-new").length) {
+        var s = $(".mobmenu-new").offset().top;
+        $(window).scrollTop() > s ? $(".mobmenu-new").addClass("fixed") : $(".mobmenu-new").removeClass("fixed"), $(window).on("scroll", (function () {
+            $(window).scrollTop() > s ? $(".mobmenu-new").addClass("fixed") : $(".mobmenu-new").removeClass("fixed")
+        })), $(".mobmenu-new .curline").on("click", (function () {
+            return $(".mobmenu-new .subline").slideToggle(300), !1
+        })), $(".mobmenu-new .subline a").on("click", (function () {
+            var e = $(this).attr("href");
+            $(".mobmenu-new .subline").slideUp(300);
+            $(e).offset().top;
+            return $("html, body").animate({scrollTop: $(e).offset().top - 80}, 0), !1
+        }))
+    }
+    var menu0 = $(".header__main-menu.main-menu");
+    var menu0sm = menu0.find('.submenu');
+    var menu1 = $(".main-nav");
+    var menu1sm = menu1.find('.submenu');
+    var menu2 = $('.header__links-list');
+    var menu2sm = menu2.find('.submenu');
+    var menu3 = $('.header__desctop-menu');
+    var menu3sm = menu3.find('.submenu');
+    var menuFlag2hide = false;
+    // console.log('menu1sm',menu1sm);
+    // console.log('menu2sm',menu2sm);
+    // console.log('menu3sm',menu3sm);
+
+    if ($.datepicker.regional.ru = {
+        closeText: "Закрыть",
+        prevText: "Пред",
+        nextText: "След",
+        currentText: "Сегодня",
+        monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+        monthNamesShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
+        dayNames: ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
+        dayNamesShort: ["вск", "пнд", "втр", "срд", "чтв", "птн", "сбт"],
+        dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+        weekHeader: "Нед",
+        dateFormat: "dd.mm.yy",
+        firstDay: 1,
+        isRTL: !1,
+        showMonthAfterYear: !1,
+        yearSuffix: ""
+    },
+        $.datepicker.setDefaults($.datepicker.regional.ru),
+        $(".datepicker").datepicker({dateFormat: "dd.mm.yy"}),
+
+        $(document).on("mouseover", (function (e) {
+        let wwidth = $(window).width();
+        if (wwidth >= 1100) {
+            var t = $(e.target);
+            var t1 = t.closest(".hassub");
+
+            if (t1.length > 0) {
+                    // console.log('A, target -> ', t);
+                    if (t.hasClass("hassub")) {
+                        var s = t.data("id");
+                    } else {
+                        t = t1;
+                        s = t1.data("id")
+                    }
+                    // var i = $(t).closest(".main-nav");
+                    var i = t.closest(".main-nav");
+                    if (i.length <= 0) {
+                        i = t.closest('.header__links-list');
+                        if (i.length <= 0) {
+                            i = t.closest('.header__desctop-menu');
+                        }
+                    }
+                    //console.log('variant a',i);
+                    let hideMe0 = menu0.find('.submenu[data-id!="' + s + '"]');
+                    let hideMe1 = menu1.find('.submenu[data-id!="' + s + '"]');
+                    let hideMe2 = menu2.find('.submenu[data-id!="' + s + '"]');
+                    let hideMe3 = menu3.find('.submenu[data-id!="' + s + '"]');
+                    hideMe0.fadeOut(150);
+                    hideMe1.fadeOut(150);
+                    hideMe2.fadeOut(150);
+                    hideMe3.fadeOut(150);
+                    var i1 = i.find('.submenu[data-id="' + s + '"]');
+                    //console.log('showMe ('+i1.length+')',i1);
+                    var i2 = i1.find('.submenu-inner');
+                    menuFlag2hide = true;
+                    i1.length > 0 && i.find('.submenu[data-id="' + s + '"]').fadeIn(150, (function () {
+                        var e = t.position().left + t.width() / 2 - (wwidth - i.find(".container").outerWidth()) / 2 - i2.width() / 2;
+                        e < 0 && (e = 0), e + i2.width() > i.find(".container").outerWidth() && (e = i.find(".container").outerWidth() - i2.width() - 30), i2.css("left", e + "px")
+                    }))
+            } else {
+                let item = t.closest(".submenu");
+                if (item.length < 1) {
+                    item = t.children('.submenu');
+                    if (item.length < 1) {
+                        //console.log('B hide, target -> ', t);
+                        menuFlag2hide = false;
+                        menu0sm.fadeOut(150) && menu1sm.fadeOut(150) && menu2sm.fadeOut(150) && menu3sm.fadeOut(150);
+                    }
+                }
+            }
+        }
+    })), $(".addrlist-list").length > 0) {
+        var i = !1;
+
+        function a() {
+            $(window).width() <= 1e3 && !i ? ($(".addrlist-list").slick({
+                dots: !1,
+                arrows: !0,
+                infinite: !0,
+                speed: 300,
+                slidesToShow: 1
+            }), i = !0) : $(window).width() > 1e3 && i && ($(".addrlist-list").slick("unslick"), i = !1)
+        }
+
+        a(), $(window).on("resize", (function () {
+            a()
+        }))
+    }
+/*
+    var menuHandler;
+    menuHandler = {
+        hdr_ti_not_adp: document.getElementById('hdr_ti_not_adp'),
+        menu: {
+            main: false,
+            hassubs: [],
+        },
+    };
+    menuHandler.menu.main = (menuHandler.hdr_ti_not_adp).querySelector('.main-menu');
+    //menuHandler.menu.hassubs = (menuHandler.menu.main).querySelectorAll('.item > .hassub');
+    (menuHandler.menu.main).querySelectorAll('.item > .hassub').forEach((hassub) => {
+        let view = hassub.parentElement;
+        let submenu = view.querySelector('.submenu');
+        menuHandler.menu.hassubs.push({
+            item: hassub,
+            view: view,
+            submenu: view.querySelector('.submenu'),
+            $submenu: $(submenu)
+        });
+    });
+    function showMenuHassub(index){
+        menuHandler.menu.hassubs[index].submenu.style.display = 'block';
+        menuHandler.menu.hassubs.forEach((hassub, i) => {
+            if(i !== index){
+                menuHandler.menu.hassubs[i].submenu.style.display = 'none';
+            }
+        });
+    }
+    function hideMenuHassub(index){
+        menuHandler.menu.hassubs.forEach((hassub, i) => {
+            menuHandler.menu.hassubs[i].submenu.style.display = 'none';
+        });
+    }
+    menuHandler.menu.hassubs.forEach((hassub, index) => {
+        console.log(index+' => ',menuHandler.menu.hassubs[index])
+        menuHandler.menu.hassubs[index].addEventListener('mouseenter', showMenuHassub(index));
+        menuHandler.menu.hassubs[index].addEventListener('mouseover', showMenuHassub(index));
+    });*
+
+    console.log('menuHandler',menuHandler);*/
+
+    if ($(".cppartner4").slick({
+        dots: !1,
+        arrows: !0,
+        infinite: !0,
+        speed: 300,
+        slidesToShow: 4,
+        responsive: [{breakpoint: 767, settings: {slidesToShow: 2}}]
+    }), $(".cppartner5").slick({
+        dots: !1,
+        arrows: !0,
+        infinite: !0,
+        speed: 300,
+        slidesToShow: 4,
+        responsive: [{breakpoint: 767, settings: {slidesToShow: 2}}]
+    }), $(".cpp6item").length > 0) {
+        var n, o, r;
+
+        function l() {
+            o = !$(n).prev(".cpp6item").length > 0 ? $(".cpp6item").last() : $(n).prev(".cpp6item"), r = !$(n).next(".cpp6item").length > 0 ? $(".cpp6item").first() : $(n).next(".cpp6item"), $(".cpp6item").removeClass("act"), $(".cpp6item").removeClass("next"), $(".cpp6item").removeClass("prev"), $(n).addClass("act"), $(r).addClass("next"), $(o).addClass("prev")
+        }
+
+        n = $(".cpp6item.act").length > 0 ? $(".cpp6item.act") : $(".cpp6item").first(), l(), $(document).on("click", ".cpp6item.next", (function () {
+            return n = r, l(), !1
+        })), $(document).on("click", ".cpp6item.prev", (function () {
+            return n = o, l(), !1
+        }))
+    }
+    if ($(".cpbl4item table").on("click", (function () {
+        $(this).parent().toggleClass("open")
+    })), $(".main-nav .hassub").on("click", (function () {
+        if ($(window).width() < 1100) {
+            var e = $(this).data("id");
+            if ($('.main-nav .submenu[data-id="' + e + '"]').length > 0) {
+                if (!$('.main-nav .submenu[data-id="' + e + '"]').hasClass("act")) return $(this).addClass("act"), $(".main-nav .submenu").width($(window).width()), $('.main-nav .submenu[data-id="' + e + '"]').toggleClass("act"), $('.main-nav .submenu[data-id="' + e + '"]').slideToggle(150), !1;
+                $(this).removeClass("act")
+            }
+        }
+    })), $(".bonustable .leftarr").on("click", (function () {
+        if ($(".bonustable .brow.active").prev().hasClass("brow")) var e = $(".bonustable .brow.active").prev().data("id"); else e = $(".bonustable .brow").last().data("id");
+        $(".bonustable .brow").removeClass("active"), $('.bonustable .brow[data-id="' + e + '"]').addClass("active")
+    })), $(".bonustable .rightarr").on("click", (function () {
+        if ($(".bonustable .brow.active").next().hasClass("brow")) var e = $(".bonustable .brow.active").next().data("id"); else e = $(".bonustable .brow").eq(0).data("id");
+        $(".bonustable .brow").removeClass("active"), $('.bonustable .brow[data-id="' + e + '"]').addClass("active")
+    })), $(".bl1tabs .tabitem").on("click", (function () {
+        var e = $(this).attr("href");
+        return $("html, body").animate({scrollTop: $(e).offset().top}, 1e3), !1
+    })), $(".vidbl7 .docslist").length && $(".vidbl7 .docslist").slick({
+        dots: !1,
+        arrows: !0,
+        infinite: !0,
+        speed: 300,
+        slidesToShow: 3
+    }), $(".doctor-block").length > 0) {
+        var c = new Date;
+
+        function d() {
+            var e = $('.doctors-popup-call-wrap input[name="SERVICE"]').val(),
+                t = $('.doctors-popup-call-wrap input[name="DOCTOR"]').val(),
+                s = $('.doctors-popup-call-wrap input[name="DATE"]').val(),
+                i = $('.doctors-popup-call-wrap input[name="TIME"]').val();
+            $(".doctors-popup-step .d-list").removeClass("active"), $('.doctors-popup-step .d-list[data-serv="' + e + '"]').addClass("active"), $(".doctors-popup-step .d-list .d-list-item").removeClass("active"), "" == t ? ($('.doctors-popup-step .d-list[data-serv="' + e + '"] .d-list-item').first().addClass("active"), t = $('.doctors-popup-step .d-list[data-serv="' + e + '"] .d-list-item').first().data("id"), $('.doctors-popup-call-wrap input[name="DOCTOR"]').val(t)) : $('.doctors-popup-step .d-list .d-list-item[data-id="' + t + '"]').addClass("active");
+            var a = new Date(s.replace(/(\d{2})\.(\d{2})\.(\d{4})/, "$3-$2-$1")).getDay();
+            0 == a ? a = 6 : a -= 1, $('.doctors-popup-step .time .new-select[data-day="' + a + '"][data-doc="' + t + '"]').length > 0 ? ($(".doctors-popup-step .time .new-select").hide(), $(".doctors-popup-step .time .holiday").hide(), $('.doctors-popup-step .time .new-select[data-day="' + a + '"][data-doc="' + t + '"]').show(), i = $('.doctors-popup-step .time .new-select[data-day="' + a + '"][data-doc="' + t + '"] .current').text()) : ($(".doctors-popup-step .time .new-select").hide(), $(".doctors-popup-step .time .holiday").show(), i = ""), $('.doctors-popup-call-wrap input[name="DOCTOR"]').val(t), $('.doctors-popup-call-wrap input[name="TIME"]').val(i);
+            var n = e + " " + $('.doctors-popup-step .d-list.active .d-list-item[data-id="' + t + '"] .name').text() + " " + s + " в " + i;
+            $(".doctors-popup-call-wrap .final span").text(n)
+        }
+
+        $(".datepicker-form").length > 0 && $(".datepicker-form").datepicker({
+            dateFormat: "dd.mm.yy",
+            minDate: c,
+            onSelect: function (e, t) {
+                $('input[name="DATE"]').val(e), d()
+            }
+        }), d(), $(".doctor-block .detail").on("click", (function () {
+            var e = $(this).closest(".doctor-block");
+            return $(e).hasClass("active") ? ($(this).text("Подробнее"), $(e).removeClass("active"), $(e).find(".doctor-block-add").slideUp()) : ($(this).text("Скрыть"), $(e).addClass("active"), $(e).find(".doctor-block-add").slideDown()), !1
+        }));
+        var p = !1;
+
+        function u() {
+            $(window).width() <= 1100 && !p ? ($(".doctor-list2").slick({
+                dots: !1,
+                arrows: !0,
+                infinite: !1,
+                speed: 300,
+                slidesToShow: 3,
+                responsive: [{breakpoint: 850, settings: {slidesToShow: 2}}, {
+                    breakpoint: 560,
+                    settings: {slidesToShow: 1}
+                }]
+            }), $(".doctors-popup-call2 .doctors-popup-call2-wrap .bl2 .vslider").slick({
+                dots: !1,
+                arrows: !0,
+                infinite: !0,
+                speed: 300,
+                slidesToShow: 1,
+                variableWidth: !0
+            }), p = !0) : $(window).width() > 1100 && p && ($(".doctor-list2").slick("unslick"), $(".doctors-popup-call2 .doctors-popup-call2-wrap .bl2 .vslider").slick("unslick"), p = !1)
+        }
+
+        u(), $(window).on("resize", (function () {
+            u()
+        })), $(".doctor-block .doctor-block-col1").on("click", (function () {
+            if ($(window).width() <= 1100) {
+                $(window).trigger("resize");
+                var e = $(this).closest(".doctor-block");
+                $(e).hasClass("active") ? ($(e).removeClass("active"), $(e).find(".doctor-block-add").slideUp()) : ($(e).addClass("active"), $(e).find(".doctor-block-add").slideDown())
+            }
+            return !1
+        })), $(".doctor-service-item .doctor-service-item-name").on("click", (function () {
+            var e = $(this).closest(".doctor-service-item");
+            return $(e).hasClass("active") ? $(e).removeClass("active") : $(e).addClass("active"), !1
+        })), $(".doctor-block .doctor-block-col2 .schedule-item .ava img").on("click", (function (e) {
+            $(".ava-item").hide();
+            var t = $(this).data("avaid");
+            return $(this).closest(".doctor-block-col2").find('.ava-item[data-avaid="' + t + '"]').show(), !1
+        })), $(document).on("click", (function (e) {
+            var t = e.target;
+            0 != $(t).closest(".new-select .select-list").length || $(t).hasClass(".new-select .select-list") || $(".new-select .select-list").hide(), 0 != $(t).closest(".ava-item").length || $(t).hasClass(".ava-item") || $(".ava-item").hide()
+        })), $(".doctors-popup-call .new-select .current").on("click", (function () {
+            return $(this).closest(".new-select").find(".select-list").fadeToggle(), !1
+        })), $(".doctors-popup-call .new-select .select-list .select-list-item").on("click", (function () {
+            var e = $(this).data("id"), t = $(this).text(), s = $(this).closest(".new-select").data("name");
+            return $(this).closest(".new-select").find(".current").text(t), $('input[name="' + s + '"]').val(e), $(this).closest(".new-select").find(".select-list").fadeOut(), d(), !1
+        })), $(".doctors-popup-call .d-list .d-list-item").on("click", (function () {
+            $(this).closest(".d-list").find(".d-list-item").removeClass("active"), $(this).addClass("active");
+            var e = $(this).data("id");
+            return $('input[name="DOCTOR"]').val(e), d(), !1
+        })), $(".dpopup .cl").on("click", (function () {
+            return $(this).closest(".dpopup").fadeOut(300), !1
+        })), $(".doctor-open-popup").on("click", (function () {
+            var e = $(this).data("popup");
+            if ("call2" == e) {
+                var t = $(this).data("id");
+                $('.dpopup[data-popupname="' + e + '"][data-id="' + t + '"]').length > 0 && ($(".dpopup").hide(), $('.dpopup[data-popupname="' + e + '"][data-id="' + t + '"]').fadeIn(300))
+            } else if ($('.dpopup[data-popupname="' + e + '"]').length > 0) {
+                $(".dpopup").hide(), $('.dpopup[data-popupname="' + e + '"]').fadeIn(300);
+                var s = $(this).data("serv"), i = $(this).data("doc");
+                $('.doctors-popup-call-wrap input[name="SERVICE"]').val(s), $('.doctors-popup-step .new-select[data-name="SERVICE"] .current').text(s), "" != i ? $('.doctors-popup-call-wrap input[name="DOCTOR"]').val(i) : $('.doctors-popup-call-wrap input[name="DOCTOR"]').val(""), d()
+            }
+            return !1
+        })), $(".doctors-popup-call2 .doc-slider").slick({
+            dots: !1,
+            arrows: !0,
+            infinite: !0,
+            speed: 300,
+            slidesToShow: 1,
+            variableWidth: !0
+        })
+    }
+    var basketIdentifier = $('ul.header__user-menu .bx-basket.bx-opener').attr('id');
+    if(typeof(basketIdentifier) === "undefined") {
+        basketIdentifier = false;
+    }
+
+    $(".basketadd").on("click", (function () {
+        var e = $(this).data("href"), t = $(this).attr("href");
+        void 0 !== e && "" != e && (t = e);
+        $(this);
+        var s = $(this).data("name"), i = $(this).data("dopserv"), a = $(this).data("id");
+        return $(".spinner").fadeIn(300), $.get(t, (function (e) {
+            if(!basketIdentifier) {
+                bx_basketT0kNhm.refreshCart([]), $('.basketadd.cartlink[data-id="' + a + '"]').addClass("active"), $(".cart-popup .name").text(s), "" == i ? $(".cart-popup .hint").hide() : $(".cart-popup .hint").show(), $(".cart-popup").show(), $(".cart-popup .dopserv").text(i), $(".cart-popup").removeClass("closed"), $(".spinner").fadeOut(100)
+            }else{
+                window[basketIdentifier].refreshCart([]), $('.basketadd.cartlink[data-id="' + a + '"]').addClass("active"), $(".cart-popup .name").text(s), "" == i ? $(".cart-popup .hint").hide() : $(".cart-popup .hint").show(), $(".cart-popup").show(), $(".cart-popup .dopserv").text(i), $(".cart-popup").removeClass("closed"), $(".spinner").fadeOut(100)
+            }
+        })), !1
+    })), $(".cart-popup .button").on("click", (function () {
+        if ($(".cart-popup").addClass("closed"), $(this).hasClass("closepopup")) return !1
+    })), $("#basket_form").length > 0 && $.get(location.href, (function (e) {
+        console.log('teeest');
+        var t = $(e).find("#basket_form");
+        $("#basket_form").html(t)
+        $(".fancybox_event").fancybox({
+            padding: [0,0,0,0],
+            fitToView: false,
+            tpl: {
+                wrap: '<div class="fancybox-wrap fbox_event" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div>',
+                closeBtn: '<div title="Close" class="fancybox-item fancybox-close close_fbox_event"></div>'
+            },
+            beforeShow: function() {
+                $('.fbox_event').parent().addClass('bga');
+            }
+        });
+    })), $("input.setOfficeName[type=radio]").on("change", (function () {
+        var e = $('input.setOfficeName[checked="checked"]').data("name");
+        $(".getOfficeName").val(e)
+    }));
+    var w = $(".promo-slider"), h = $(".promo-slider2"), v = $(".promo .swiper-slide"), m = $(".promo .current");
+    $(".promo .last"), new Swiper(w, {
+        autoplay: {delay: 12e3},
+        speed: 900,
+        loop: !0,
+        spaceBetween: 0,
+        pagination: {el: ".promo .swiper-pagination", type: "bullets", clickable: !0},
+        navigation: {nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev"},
+        autoplayDisableOnInteraction: !1,
+        onSlideChangeStart: function (e) {
+            var t = v.filter(".swiper-slide-active");
+            m.text(v.index(t) + 1)
+        }
+    }), new Swiper(h, {
+        autoplay: 0,
+        speed: 0,
+        loop: !1,
+        spaceBetween: 0,
+        pagination: {el: ".promo .swiper-pagination", type: "bullets", clickable: !0},
+        autoplayDisableOnInteraction: !1,
+        onSlideChangeStart: function (e) {
+            var t = v.filter(".swiper-slide-active");
+            m.text(v.index(t) + 1)
+        }
+    });
+    if ((new TimelineMax).to(".rect-first .line5", .5, {width: "35px"}).to(".rect-first .line1", .5, {width: "32%"}).to(".rect-first .line2", .5, {height: "100%"}).to(".rect-first .line3", .5, {width: "100%"}).to(".rect-first .line4", .5, {height: "100%"}).to(".rect-second .line1", .5, {height: "100%"}).to(".rect-second .line2", .5, {width: "100%"}).to(".rect-second .line3", .5, {height: "100%"}).to(".rect-second .line4", 3, {width: "2000px"}), $(".d3_tur-secondary").length > 0) {
+        var f = new ScrollMagic.Controller, g = new TimelineMax;
+        g.to(".crc_ln2", .5, {width: "2000px"}), g.to(".crc_ln0", .5, {width: "65%"}), g.to(".n", .5, {top: "0px"}), g.to(".e", .5, {top: "0px"}, "-=0.5"), g.to(".w", .5, {top: "0px"}, "-=0.5"), g.to(".lab", .5, {scale: "1"});
+        new ScrollMagic.Scene({triggerElement: ".d3_tur-secondary"}).setTween(g).addTo(f)
+    }
+    if (AOS.init({offset: 300, disable: window.innerWidth < 800}), $(".hdr_top_in_transparent").length > 0) {
+        var b = $(".hdr_top_in_transparent"), k = !0;
+        $(window).on("scroll", (function (e) {
+            $(window).scrollTop() > 140 && k ? (b.removeClass("hdr_top_in_transparent"), k = !1) : $(window).scrollTop() < 140 && !k && (b.addClass("hdr_top_in_transparent"), k = !0)
+        }))
+    }
+    new Swiper(".services-slider", {
+        autoplay: 0,
+        speed: 1200,
+        loop: !1,
+        slidesPerView: 3,
+        slidesPerGroup: 3,
+        nextButton: ".services-slider .swiper-button-next",
+        prevButton: ".services-slider .swiper-button-prev",
+        pagination: {el: ".services-slider .swiper-pagination", type: "fraction", clickable: !0},
+        autoHeight: !0,
+        paginationFractionRender: function (e, t, s) {
+            return '<span class="' + t + '"></span> <span class="spr"></span> <span class="' + s + '"></span>'
+        },
+        observer: !0,
+        observeParents: !0,
+        breakpoints: {
+            768: {slidesPerView: 1, slidesPerView: 1, slidesPerGroup: 1},
+            1200: {slidesPerView: 2, slidesPerView: 2, slidesPerGroup: 2}
+        }
+    });
+    if ($(window).on("load", (function () {
+        $("iframe").each((function () {
+            var e = $(this).data("src");
+            void 0 !== e && $(this).attr("src", e)
+        }))
+    })), $(".show3d").length > 0) {
+        f = new ScrollMagic.Controller;
+        var C = new TimelineMax;
+        C.to(".show3d .line2", 1, {width: "2000px"}), C.to(".show3d .line1", 1, {width: "279px"}), C.to(".show3d-circle", 1, {className: "+=active"}, "-=1"), C.to(".show3d .three, .show3d .d", 1, {className: "+=active"}), C.to(".spaced", 1, {className: "+=active"}), C.to(".show3d-link", 1, {className: "+=active"}, "-=0.7"), C.to(".play-link", 1, {className: "+=active"}, "-=1"), C.to(".show3d-desc", 1, {className: "+=active"}, "-=1");
+        new ScrollMagic.Scene({triggerElement: ".show3d"}).setTween(C).addTo(f)
+    }
+    var T = $(".tab-pane"), S = {
+            onSlideChangeStart: function (e) {
+                var t = e.realIndex;
+                $(".tabs").find(".tab-pane").removeClass("js-active").eq(t).addClass("js-active")
+            }, autoHeight: !0, noSwiping: !0
+        }, x = null, y = null,
+        M = new Swiper(".tests-nav-slider", {initialSlide: $(".tests-nav-slider").attr("data-active")});
+    T.click((function (e) {
+        e.preventDefault();
+        var t = $(this), s = t.index(), i = t.closest(".tabs"), a = i.find(".tab-pane"), n = $(i.data("slider"));
+        if (a.removeClass("js-active"), t.addClass("js-active"), $(n).slideDown(), x ? x.slideTo(s) : ".tests-nav-slider" == n.selector ? M.slideTo(s) : (x = new Swiper(n, S)).slideTo(s), $(this).closest(".new-vacancies").length && $(this).closest(".new-vacancies").find(".slider").length && (0 == s ? ($(this).closest(".new-vacancies").find(".slider .slider-item").removeClass("act"), $(this).closest(".new-vacancies").find(".slider .tab1").addClass("act")) : 1 == s && ($(this).closest(".new-vacancies").find(".slider .slider-item").removeClass("act"), $(this).closest(".new-vacancies").find(".slider .tab2").addClass("act"))), ".vacancies-slider" === n.selector) {
+            var o = $(".js-show-vacancies");
+            o.addClass("active"), o.find("span").eq(0).text("Скрыть вакансии"), y = new Swiper(".vacancies-list", {
+                nested: !0,
+                autoHeight: !0,
+                nextButton: ".vacancies-list .swiper-button-next",
+                prevButton: ".vacancies-list .swiper-button-prev",
+                pagination: ".vacancies-list .swiper-pagination",
+                paginationType: "fraction",
+                paginationFractionRender: function (e, t, s) {
+                    return '<span class="' + t + '"></span> <span class="spr"></span> <span class="' + s + '"></span>'
+                }
+            })
+        }
+    }));
+    $(".js-vacancy-trigger"), $(".vacancies-list .swiper-wrapper");
+    $(".vacancy").on("click", ".js-vacancy-trigger", (function (e) {
+        e.preventDefault(), $(this).toggleClass("active"), $(this).next().next().toggle(), y[0].updateAutoHeight(), y[1].updateAutoHeight(), x.updateAutoHeight()
+    })), $(".js-show-vacancies").click((function (e) {
+        e.preventDefault();
+        var t = $(this);
+        t.hasClass("active") ? (t.removeClass("active"), $(".vacancies-slider").slideToggle(), $(".vacancies .tab-pane").removeClass("js-active"), t.find("span").eq(0).text("Показать вакансии")) : (t.addClass("active"), $(".tabs .tab-pane").eq(0).trigger("click"), t.find("span").eq(0).text("Скрыть вакансии"))
+    }));
+    new Swiper(".banner-slider", {
+        autoplay: 6e3,
+        speed: 900,
+        loop: !0,
+        pagination: ".banner-slider .swiper-pagination",
+        paginationClickable: !0
+    });
+    $('[data-toggle="tooltip"]').tooltip({trigger: "hover"}), $(".js-option").click((function (e) {
+        if (e.preventDefault(), $(this).hasClass("active")) {
+            if ($(this).parent().find(".cartlink").length > 0) {
+                var t = $(this).parent().find(".cartlink");
+                $(t).attr("href");
+                $(this).hasClass("option-car"), $(this).hasClass("option-clock")
+            }
+        } else if ($(this).addClass("active"), $(this).parent().find(".cartlink").length > 0) t = $(this).parent().find(".cartlink"), $(t).attr("href")
+    })), $("body").on("click", ".js-tests-item-trigger", (function (e) {
+        e.preventDefault(), $(this).toggleClass("active"), $(this).next().slideToggle()
+    })), $("body").on("click", ".js-test-block-trigger", (function (e) {
+        e.preventDefault(), $(this).toggleClass("active"), $(this).next().slideToggle()
+    }));
+    $(".js-toggle-filters").click((function (e) {
+        e.preventDefault();
+        var t = $(this), s = t.prev();
+        t.toggleClass("active"), t.hasClass("active") ? (t.find("span").text("Скрыть"), s.removeClass("grid-closed")) : (t.find("span").text("Показать все услуги"), s.addClass("grid-closed"))
+    }));
+    new Swiper(".address-lists", {
+        nested: !0,
+        autoHeight: !0,
+        nextButton: ".address-lists .swiper-button-next",
+        prevButton: ".address-lists .swiper-button-prev",
+        pagination: ".address-lists .swiper-pagination",
+        paginationType: "fraction",
+        observe: !0,
+        observeParents: !0,
+        paginationFractionRender: function (e, t, s) {
+            return '<span class="' + t + '"></span> <span class="spr"></span> <span class="' + s + '"></span>'
+        }
+    }), f = new ScrollMagic.Controller;
+    var _ = $(".addrlist-list-item img"), D = TweenMax.staggerTo(_, 3, {scale: 1, ease: Power3.easeNone}, .5),
+        O = (new ScrollMagic.Scene({triggerElement: ".addrlist-title"}).setTween(D).addTo(f), f = new ScrollMagic.Controller, _ = $(".franchise-block2 .item .img img"), D = TweenMax.staggerTo(_, 3, {
+            scale: 1,
+            ease: Power3.easeNone
+        }, .5), new ScrollMagic.Scene({triggerElement: "#fb2_trigger"}).setTween(D).addTo(f), $(".franchise-block2 .item .text")),
+        N = TweenMax.staggerTo(O, 3, {y: -50, opacity: 1, ease: Power3.easeNone}, .5);
+    new ScrollMagic.Scene({triggerElement: "#fb2_trigger"}).setTween(N).addTo(f), O = $(".unique-new .unique-new-item p"), N = TweenMax.staggerTo(O, 2, {
+        y: 0,
+        opacity: 1,
+        ease: Power3.easeNone
+    }, .3), new ScrollMagic.Scene({triggerElement: "#fbu_trigger"}).setTween(N).addTo(f), O = $(".unique-new .unique-new-item .sq"), N = TweenMax.staggerTo(O, .8, {
+        scale: 1,
+        opacity: 1,
+        ease: Power3.easeNone
+    }, .2), new ScrollMagic.Scene({triggerElement: "#fbu_trigger"}).setTween(N).addTo(f), O = $(".block-supp-list .item .sq"), N = TweenMax.staggerTo(O, .8, {
+        scale: 1,
+        opacity: 1,
+        ease: Power3.easeNone
+    }, .2), new ScrollMagic.Scene({triggerElement: "#fbsup_trigger"}).setTween(N).addTo(f)
+}));

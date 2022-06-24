@@ -1,0 +1,475 @@
+$(function () {
+	var formSending = false;
+	$('body').on(
+		'submit',
+		'.consform form, .win_popup form, .ask_your_question form, .hot_pr, .ask_your_question-new form, .certform, .subform, .vracham1, .vracham2, .nadomform',
+		function (e) {
+			e.preventDefault();
+			let check_class = $(this).parent().parent().parent().attr('class');
+
+			if (!formSending && check_class != 'popup-wrap') {
+				var form = $(this);
+				if (!$(this).hasClass('nadomform') && !$(this).hasClass('customsend')) {
+					var files = [];
+
+					if (form.attr('id') !== 'cf') {
+						formSending = true;
+
+						if (form.attr('id') == 'jobs' && $('#jobs .list_dwn li').length > 0) {
+							$('#jobs .list_dwn li').each(function () {
+								files.push($(this).find('p').text());
+							});
+						}
+
+						$.post(
+							'/include/ajax/ajax_form_send2.php',
+							{ data: form.serialize(), form_id: form.attr('id'), files: files },
+							function (res) {
+								formSending = false;
+								if (form.attr('id') == 'doctorqchat') {
+									if (res != '') {
+										form.trigger('reset');
+										$.fancybox.close();
+										var win = window.open(res, '_blank');
+										win.focus();
+										var url = res.split('?');
+										window.history.pushState('chat', 'Chat', window.location.href + '?' + url[1]);
+										$('.videoform').show();
+										$('.promo').hide();
+									}
+								}
+
+								if (form.attr('id') == 'spravka_form') {
+									$('#spravka_message').attr('href', res);
+									$.fancybox.open({
+										href: '#thank_you_spravka',
+										padding: [0, 0, 0, 0],
+										fitToView: false,
+									});
+									openInNewTab(res);
+								}
+
+								if (res == '') {
+									form.trigger('reset');
+									$.fancybox.close();
+
+									var success_id = '#thank_you';
+									if (
+										form.closest('#questionsform_doctor').length > 0 ||
+										form.closest('#addrconsult_doctor').length > 0
+									)
+										success_id = '#thank_you_doctor';
+
+									if (form.attr('id') == 'aksub' || form.attr('id') == 'akcert')
+										success_id = '#thank_you2';
+
+									if (form.attr('id') == 'covidform' || form.attr('id') == 'covidform_bescont') {
+										ym(44255039, 'reachGoal', 'anketa_covid19');
+										success_id = '#thank_you3';
+									}
+
+									$.fancybox.open({ href: success_id, padding: [0, 0, 0, 0], fitToView: false });
+
+									if (form.attr('id') == 'questions') {
+										// ga('send', 'event', 'ask-doctor', 'send');
+										// ga('send', 'event', 'askdoc', 'send');
+										// ga('send', 'event', 'form', 'b2c_ascdoc');
+										ym(44255039, 'reachGoal', 'askdoc');
+									}
+									else if (form.attr('id') == 'bc') {
+										//ga('send', 'event', 'VND1', 'send');
+										ym(44255039, 'reachGoal', 'VND1');
+									}
+									else if (form.attr('id') == 'bc_cu') {
+										(dataLayer = window.dataLayer || []).push({
+                                        'eCategory': 'form', 
+                                        'eAction': 'send',
+                                        'eLabel': 'contact-us', 
+                                        'eNI': false,
+                                        'event': 'GAEvent'
+                                        });
+										//ga('send', 'event', 'form', 'b2c_hotline');
+										ym(44255039, 'reachGoal', 'contact');
+									}
+									else if (form.attr('id') == 'contracts') {
+										//ga('send', 'event', 'conclude_contract', 'send');
+										ym(44255039, 'reachGoal', 'conclude_contract');
+									}
+									else if (form.attr('id') == 'visitors') {
+										//ga('send', 'event', 'visit_laboratory', 'send');
+										ym(44255039, 'reachGoal', 'visit_laboratory');
+									}
+									else if (form.attr('id') == 'sm') {
+										//ga('send', 'event', 'franchise_application', 'send');
+										ym(44255039, 'reachGoal', 'franchise_application');
+									}
+									else if (form.attr('id') == 'oc') {
+										//ga('send', 'event', 'franchise_application', 'send');
+										ym(44255039, 'reachGoal', 'franchise_application');
+									}
+									else if (form.attr('id') == 'covidcorpform') {
+										//ga('send', 'event', 'covid-b2b', 'submit');
+										ym(44255039, 'reachGoal', 'covid-b2b');
+									}
+									else if (
+										form.attr('id') == 'doctor_q' ||
+										form.attr('id') == 'rphone2' ||
+										form.attr('id') == 'covidformnewtemp' ||
+										form.attr('id') == 'covidcorpformnew'
+									) {
+										if (form.attr('id') == 'doctor_q') {
+											//ga('send', 'event', 'form', 'b2c_anyform');
+										}
+
+										if (form.attr('id') == 'rphone2') {
+											//ga('send', 'event', 'form', 'b2c_callback');
+										}
+
+										if (form.attr('id') == 'covidformnewtemp') {
+											//ga('send', 'event', 'form', 'b2c_covid_anketa');
+										}
+
+										ym(44255039, 'reachGoal', 'all-b2c-forms');
+										//ga('send', 'event', 'form', 'all-b2c-forms');
+									}
+									else if (form.attr('id') == 'foundserviceform') {
+										ym(44255039, 'reachGoal', 'nuzhnaya-usluga');
+										//ga ('send', 'event', 'nuzhnaya-usluga');
+										//ga('send', 'event', 'form', 'b2c_nuzhnaya_usluga');
+									}
+								}
+							},
+						);
+					}
+				}
+				else if (form.attr('id') == 'nadomnew') {
+					//if (form.attr('data-target') == 'popup') ga('send', 'event', 'form', 'vnd2');
+					//else ga('send', 'event', 'form', 'vnd1');
+				}
+			}
+		},
+	);
+
+	function openInNewTab(url) {
+		var win = window.open(url, '_blank');
+		win.focus();
+	}
+
+	$('body').on('submit', '.doctor-request-form', function (e) {
+		e.preventDefault();
+
+		if (!formSending) {
+			var form = $(this);
+			var params = form.serializeArray();
+			formSending = true;
+			params = $.param(params);
+
+			$.post(
+				'/include/ajax/ajax_form_send2.php',
+				{ data: params, form_id: form.attr('id') },
+				function (res) {
+					if (res == '') {
+						formSending = false;
+						form.trigger('reset');
+						$.fancybox.open({ href: '#thank_you_doctor', padding: [0, 0, 0, 0], fitToView: false });
+					}
+				},
+			);
+		}
+	});
+
+	$('body').on('submit', '#doc-request', function (e) {
+		e.preventDefault();
+
+		if (!formSending) {
+			var form = $(this);
+			formSending = true;
+			var params = form.serializeArray();
+			params = $.param(params);
+
+			$.post(
+				'/include/ajax/ajax_form_send2.php',
+				{ data: params, form_id: form.attr('id') },
+				function (res) {
+					if (res == '') {
+						formSending = false;
+						form.trigger('reset');
+						$('.doctor-request').fadeOut(300, function () {
+							$.fancybox.open({ href: '#thank_you', padding: [0, 0, 0, 0], fitToView: false });
+						});
+					}
+				},
+			);
+		}
+	});
+
+	$('body').on('submit', '#cf', function (e) {
+		e.preventDefault();
+		if (!formSending) {
+			var form = $(this);
+			formSending = true;
+			var params = form.serializeArray();
+
+			$.each(params, function (index, val) {
+				if (val.name == 'EXP') params[index].value = form.find('[name=EXP]:checked').next().text();
+
+				if (val.name == 'HOW_KNOW') {
+					params[index].value = '';
+					$.each(form.find('[name=HOW_KNOW]:checked'), function (ind, check) {
+						params[index].value += $(check).next().text() + ', ';
+					});
+				}
+			});
+
+			params = $.param(params);
+
+			$.post(
+				'/include/ajax/ajax_form_send2.php',
+				{ data: params, form_id: form.attr('id') },
+				function (res) {
+					if (res == '') {
+						formSending = false;
+						form.trigger('reset');
+						$.fancybox.close();
+						$.fancybox.open({ href: '#thank_you', padding: [0, 0, 0, 0], fitToView: false });
+						//ga('send', 'event', 'select_franchise', 'send');
+						ym(44255039, 'reachGoal', 'select_franchise');
+					}
+				},
+			);
+		}
+	});
+
+	$('body').on('click', '#bc .btn_sm', function (e) {
+		e.preventDefault();
+		if (!formSending) {
+			formSending = true;
+			var form = $('#bc');
+			$(form).find('.err').removeClass('err');
+			$(form).find('.result').hide();
+			var err = false;
+			var params = {};
+
+			$(form)
+				.find('.req')
+				.each(function () {
+					if ($(this).val() == '') {
+						$(this).addClass('err');
+						err = true;
+					}
+				});
+
+			if (err) return false;
+
+			$(form)
+				.find('.fsend')
+				.each(function () {
+					params[$(this).attr('name')] = $(this).val();
+				});
+
+			params['form_id'] = $(form).attr('id');
+
+			$.post('/include/ajax/ajax_bc_add.php', params, function (res) {
+				formSending = false;
+				if (res == 'ok') {
+					form.find('.fsend').val('');
+					form.fadeOut(250);
+				}
+			});
+		}
+	});
+
+	//автоматическое переключение кол-ва человека в зависимости от цифры
+	$('input[name="KOLVOPACIENTOV"], input[name="NUMBER"]').on('change', function () {
+		if ($(this).closest('form').find('input[name="COMPANY_SIZE"]').length > 0) {
+			var val = $(this).val();
+			if (parseInt(val) > 30) {
+				$(this)
+					.closest('form')
+					.find('input[name="COMPANY_SIZE"][value="Коллектив более 30 человек"]')
+					.trigger('click');
+			} else {
+				$(this)
+					.closest('form')
+					.find('input[name="COMPANY_SIZE"][value="Коллектив до 30 человек"]')
+					.trigger('click');
+			}
+		}
+	});
+});
+
+//New forms begin
+$(document).ready(function () {
+	// Форма для "Перезвоните мне"
+	// Используется https://www.labquest.ru/vyezd-na-dom/ и на https://www.labquest.ru/samozabor/ Форма DoctorQ
+	$('body').on('submit', '.callme', function (e) {
+		e.preventDefault();
+		var form = $(this);
+		var formData = new FormData(form.get(0));
+
+		form.find("input[type=file]").each(function(){
+			formData.append($(this).attr('name'), $(this)[0].files[0]);
+		});
+		formData.append('form_id', form.attr('id'));
+
+		$.ajax({
+			type: "POST",
+			url: '/local/ajax/forms.php',
+			cache: false,
+			contentType: false,
+			processData: false,
+			data: formData,
+			dataType: 'json',
+			success: function(result) {
+				if (result != '') {
+					if(result.target_ym != '')
+						targetYm(result.target_ym);
+
+					if(result.target_ga_category != '' && result.target_ga_action != '')
+						targetGa(result.target_ga_category, result.target_ga_action);
+
+					form.trigger('reset');
+					$.fancybox.open({ href: '#thank_you', padding: [0, 0, 0, 0], fitToView: false });
+
+					if (result.ORDER_ID) {
+						$('#thank_you .blc_pp_wt').append('<br><br><p>Номер обращения: ' + result.ORDER_ID + '</p>');	
+					}
+				}
+			}
+		});
+		return false;
+	});
+});
+
+function getMinMaxDate(hours_check, minutes_check, minDplus=0, maxDplus=30) {
+	let now = new Date();
+	let hours = now.getHours();
+	let minutes = now.getMinutes();
+	let date = [];
+	date[0] = '+' + minDplus + 'd';
+	date[1] = '+' + maxDplus + 'd';
+
+	if (hours > hours_check) {
+		date[0] = '+' + (minDplus+1) + 'd'; //minD
+		date[1] = '+' + (maxDplus+1) + 'd'; //maxD
+	}
+	else if (hours == hours_check && minutes > minutes_check) {
+		date[0] = '+' + (minDplus+1) + 'd'; //minD
+		date[1] = '+' + (maxDplus+1) + 'd'; //maxD
+	}
+
+	return date;
+}
+
+function chooseSelect(select_name, class_name) {
+	if ($('.popup-block').has('select[name="' + select_name + '"]')) {
+		$('.popup-block select[name="' + select_name + '"]').change(function () {
+			let select_val = $(this).val();
+			let el = $('.popup-block .' + select_name);
+
+			if (select_val) {
+				let option_text = $('.popup-block [value="' + select_val + '"]').text();
+				$('.popup-block .' + class_name).text(option_text);
+			}
+			else
+				$('.popup-block .' + class_name).text('');
+		});
+	}
+}
+
+//Popups begin
+$(document).ready(function () {
+	$('.showform').each(function (index) {
+		$(this).on('click', function () {
+			var elem = $(this).data('formname');
+			let service_id = $(this).data('id');
+			let service_name = $(this).data('name');
+			let service_price = $(this).data('price');
+			let service_price_bio = $(this).data('price-bio');
+			let target_ym = $(this).data('ym');
+			let target_ga_category = $(this).data('ga-category');
+			let target_ga_action = $(this).data('ga-action');
+
+            let office_id = $(this).data('office');
+            let doctor = $(this).data('doctor');
+            
+			if (!$('#' + elem).length) {
+				var query = {
+					mode: 'ajax',
+					service_id: service_id,
+					service_name: service_name,
+					service_price: service_price,
+					service_price_bio: service_price_bio,
+					target_ym: target_ym,
+					target_ga_category: target_ga_category,
+					target_ga_action: target_ga_action,
+                    office_id: office_id,
+                    doctor: doctor
+				};
+
+				ajaxUrl = '/local/ajax/' + elem + '.php' + (document.location.href.indexOf('test=Y') !== -1 ? '?test=Y' : '');
+
+				$.ajax({
+					url: ajaxUrl,
+					type: 'POST',
+					dataType: 'html',
+					data: $.param(query, true),
+					success: function (data) {
+						$('.' + elem).append(data);
+						$('.' + elem).fadeIn(500);
+						$('body').css({ 'overflow-y': 'hidden' });
+
+						let hours_check_val = $('input[name=hours_check]').val();
+						let minutes_check_val = $('input[name=minutes_check]').val();
+						hours_check_val = parseInt(hours_check_val);
+						minutes_check_val = parseInt(minutes_check_val);
+
+						let hours_check = 13;
+						let minutes_check = 59;
+
+						if(hours_check_val > 0)
+							hours_check = hours_check_val;
+
+						if(minutes_check_val > 0)
+							minutes_check = hours_check_val;
+
+						let min_max_date = getMinMaxDate(hours_check, minutes_check);
+
+						$('.datepicker-form').datepicker({
+							minDate: min_max_date[0],
+							maxDate: min_max_date[1],
+						});
+
+						// вешаем событие select input
+						// select_name, class_name где выводим текст
+						chooseSelect('ZONE', 'zone-price');
+					},
+					error: function () {
+						console.log('SHOW_FORM_ERROR');
+					},
+				});
+			}
+			else {
+				$('.' + elem).fadeIn(500);
+				$('body').css({ 'overflow-y': 'hidden' });
+			}
+
+			return false;
+		});
+	});
+});
+
+function showPopup(el) {
+	$('#' + el).fadeIn(500);
+	$('body').css({ 'overflow-y': 'hidden' });
+}
+
+function showFooterPopup(type) {
+	$('.popup-footer-content').each(function (index) {
+		$(this).css({ display: 'none' });
+	});
+
+	$('#' + type).css({ display: 'block' });
+	$('.popup-footer').addClass('show');
+}
+//Popups end
