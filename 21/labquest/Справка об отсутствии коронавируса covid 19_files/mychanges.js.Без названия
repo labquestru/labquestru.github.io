@@ -1,0 +1,44 @@
+$(function(){
+    //let navOuter = $('.main-nav-outer');
+    let navOuter = $('#hdr_ti_not_adp');
+    let stk_offset = navOuter.offset().top;
+    let stk_mob_offset = $('#hdr_ti_adp').offset().top;
+    let chtoEto = $('#hdr_ti_adp');
+    let windowHook = $(window);
+
+    const initSticky = function(){
+        let offt = windowHook.scrollTop();
+        if(windowHook.width() <= 1080){
+            if(!navOuter.hasClass('sticky')){
+                navOuter.addClass('sticky');
+            }
+
+            if(offt >= stk_offset){
+                chtoEto.addClass('sticky');
+            }else{
+                chtoEto.removeClass('sticky');
+            }
+        }else{
+            if(navOuter.hasClass('sticky')){
+                navOuter.removeClass('sticky');
+            }
+            if(offt >= stk_offset){
+                navOuter.addClass('sticky');
+                // $('.hdr_top_in .col-lg-12').css({'margin-bottom':'109px'});
+            }else{
+                navOuter.removeClass('sticky');
+                // $('.hdr_top_in .col-lg-12').css({'margin-bottom':'0'});
+            }
+        }
+    }
+    initSticky();
+
+    windowHook.on('scroll', function(){
+        initSticky();
+    });
+
+    windowHook.on('resize', function(){
+        initSticky();
+    });
+
+});

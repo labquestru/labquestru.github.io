@@ -1,0 +1,393 @@
+// $(document).ready(function(){
+	window.addEventListener('load', (event) => {
+		$(document).on("submit", 'form', function() {
+			var m = $(this);
+		var form_checkbox = m.find('#checkboxG14'); // Горячая линия
+		if (form_checkbox.hasClass('valid')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = m.find('textarea[name="TEXT"]').val();
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' ' + $('#connect_us').find('div.title').text();
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+	});
+
+				$(document).on("submit", 'form', function() {
+			var m = $(this);
+		var form_checkbox = m.find('#checkboxG14'); // Франшиза
+		if ($('#checkboxG4').is(':checked')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = m.find('textarea[name="TEXT"]').val();
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' Франшиза';
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+	});
+
+
+		$(document).on("click", 'button.get_go', function() {
+
+			var m = $(this).closest('form');
+		var form_checkbox = m.find('#checkboxGAD2'); // Заказать звонок.
+		if (form_checkbox.hasClass('valid')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = m.find('textarea[name="TIME"]').val();
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' ' + 'Заказать звонок';
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!mail && !!fio)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		} else console.log ('no checkbox');
+
+	});
+
+		$(document).on("submit", 'form', function() {
+			var m = $(this);
+		var form_checkbox = m.find('#checkboxG152'); // Задать вопрос доктору 
+		if (form_checkbox.hasClass('valid')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = m.find('input[name="TEXT"]').val();
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' Вопрос Доктору';
+
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+	});
+
+		$(document).on("submit", 'form', function() {
+			var m = $(this);
+		var form_checkbox = m.find('#checkboxDR'); // Запись на прием к доктору
+		if ($('#checkboxDR').is(':checked')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var sub = 'Заявка с сайта ' + location.hostname + ' Запись на прием';
+
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+	});
+
+	$(document).on("submit", '#doctor-q', function() {
+		var m = $(this);  // Задайте вопрос доктору
+		var fio = m.find('input[name="NAME"]').val();
+		var mail = m.find('input[name="EMAIL"]').val();
+		var ct_site_id = '33347';
+		var sub = 'Заявка с сайта ' + location.hostname + ' Задать вопрос доктору Q';
+		var comment = m.find('textarea[name="TEXT"]').val();
+
+		console.log(comment);
+
+		var ct_data =
+
+		{ fio: fio, 
+			email: mail,
+			subject: sub, 
+			comment: comment,
+			requestUrl: location.href, 
+			sessionId: window.call_value 
+		};
+		console.log(ct_data);
+		if (!!mail && !!fio)
+		{
+			$.ajax(
+				{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+				);
+		}
+	});
+
+		$(document).on("submit", 'form', function() {
+			var m = $(this);
+		var form_checkbox = m.find('#ORDER_PROP_7'); // Оформление заказа ORDER_PROP_7
+		if ($('#ORDER_PROP_7').is(':checked')) {
+			var fio = m.find('input[name="ORDER_PROP_29"]').val();
+			var phone = m.find('input[name="ORDER_PROP_2"]').val();
+			var mail = m.find('input[name="ORDER_PROP_3"]').val();
+			var ct_site_id = '33347';
+
+			var sub = 'Заявка с сайта ' + location.hostname + ' Оформление заказа';
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+
+	});
+
+		$(document).on("submit", 'form', function() {
+			var m = $(this);
+		var form_checkbox = m.find('#checkboxCV19corp'); // Заявка ковид организация 
+		if (form_checkbox.hasClass('valid')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = m.find('input[name="COMPANY"]').val();
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' тест COVID-19 для организаций';
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+
+	});
+
+		$(document).on("mousedown", 'button.sendcovidorder', function() {
+			var m = $(this).closest('form');
+			console.log(m);
+		var form_checkbox = m.find('#checkboxCOV19NEW'); // Заявка ковид на дому
+		if ($('#checkboxCOV19NEW').is(':checked')) {
+			var fio = m.find('input[name="FIRST_NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = m.find('div.covid-comment-text input[name="TEXT"]').val();
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' тест COVID-19 ПЦР на дому';
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone && !!mail)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+
+	});
+
+		$(document).on("submit", 'form', function() {
+			var m = $(this);
+		var form_checkbox = m.find('#checkboxGFS'); // Не нашли нужной услуги
+		if (form_checkbox.hasClass('valid')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = m.find('textarea[name="TEXT"]').val();
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' Нет нужной услуги';
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!mail && !!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+
+	});
+
+
+
+		$(document).on("click", 'input[type="submit"]', function() {
+			var m = $(this).closest('form');
+		var form_checkbox = m.find('#nd1chk'); // вызов на дом
+		if ($('#nd1chk').is(':checked')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = '';
+
+			console.log(comment);
+			var sub = 'Заявка с сайта ' + location.hostname + ' Анализы на дому' ;
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+	});
+
+
+		$(document).on("click", 'input[type="submit"]', function() {
+			var m = $(this).closest('form');
+		var form_checkbox = m.find('#nd1chk2'); // вызов на дом с мобилки
+		if ($('#nd1chk2').is(':checked')) {
+			var fio = m.find('input[name="NAME"]').val();
+			var phone = m.find('input[name="PHONE"]').val();
+			var mail = m.find('input[name="EMAIL"]').val();
+			var ct_site_id = '33347';
+			var comment = '';
+
+			console.log(comment);
+			var sub = 'Заявка с моб.сайта ' + location.hostname + ' Анализы на дому' ;
+			var ct_data =
+
+			{ fio: fio, 
+				phoneNumber: phone, 
+				email: mail,
+				subject: sub, 
+				comment: comment,
+				requestUrl: location.href, 
+				sessionId: window.call_value 
+			};
+			console.log(ct_data);
+			if (!!phone)
+			{
+				$.ajax(
+					{ url: 'https://api.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/', dataType: 'json',type: 'POST', data: ct_data, async: false }
+					);
+			}
+		}
+
+	});
+
+
+
+
+	});
